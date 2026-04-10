@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
-import { PieChart } from 'echarts/charts';
-import { TooltipComponent } from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import { init, use, type EChartsType } from 'echarts/core';
 
 import type { DonutChartItem } from '@/types/analytics';
-
-use([PieChart, TooltipComponent, CanvasRenderer]);
 
 const props = defineProps<{
   title: string;
@@ -16,12 +11,13 @@ const props = defineProps<{
   items: DonutChartItem[];
   centerLabel: string;
   centerValue: string;
+  domId?: string;
 }>();
 
-const chartRef = ref<HTMLDivElement | null>(null);
+const instance = getCurrentInstance();
+const chartDomId = computed(() => props.domId || `main-donut-${instance?.uid ?? '0'}`);
 const activeItem = ref<DonutChartItem | null>(null);
-let chart: EChartsType | null = null;
-let resizeObserver: ResizeObserver | null = null;
+let myChart: echarts.EChartsType | null = null;
 
 const seriesData = computed(() =>
   props.items.map((item) => ({
@@ -92,41 +88,45 @@ function buildOption(data: Array<{ name: string; value: number; itemStyle: { col
 
 const option = computed<EChartsOption>(() => buildOption(seriesData.value));
 
-function renderChart() {
-  if (!chartRef.value) return;
+function applyOption() {
+  if (!myChart) return;
+  const nextOption = option.value;
+  if (nextOption && typeof nextOption === 'object') {
+    myChart.setOption(nextOption);
+  }
+}
 
-  if (!chart) {
-    chart = init(chartRef.value, undefined, { renderer: 'canvas' });
+function renderChart() {
+  const dom = document.getElementById(chartDomId.value);
+  if (!dom) return;
+
+  if (!myChart) {
+    myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
     activeItem.value = getDefaultActiveItem();
 
-    chart.on('mouseover', (params) => {
+    myChart.on('mouseover', (params) => {
       if (params.componentType !== 'series') return;
       activeItem.value = props.items.find((item) => item.label === params.name) ?? null;
     });
 
-    chart.on('globalout', () => {
+    myChart.on('globalout', () => {
       activeItem.value = getDefaultActiveItem();
     });
   }
 
-  chart.setOption(option.value, true);
-  chart.resize();
+  applyOption();
 }
 
 function handleResize() {
-  chart?.resize();
+  myChart?.resize();
 }
 
 onMounted(async () => {
   await nextTick();
   renderChart();
-
-  if (typeof ResizeObserver !== 'undefined' && chartRef.value) {
-    resizeObserver = new ResizeObserver(() => {
-      handleResize();
-    });
-    resizeObserver.observe(chartRef.value);
-  }
 
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', handleResize);
@@ -134,7 +134,7 @@ onMounted(async () => {
 });
 
 watch(option, () => {
-  renderChart();
+  applyOption();
 });
 
 watch(
@@ -146,15 +146,12 @@ watch(
 );
 
 onBeforeUnmount(() => {
-  resizeObserver?.disconnect();
-  resizeObserver = null;
-
   if (typeof window !== 'undefined') {
     window.removeEventListener('resize', handleResize);
   }
 
-  chart?.dispose();
-  chart = null;
+  myChart?.dispose();
+  myChart = null;
 });
 </script>
 
@@ -169,7 +166,7 @@ onBeforeUnmount(() => {
 
     <div class="dashboard-donut-card__layout">
       <div class="dashboard-donut-card__chart">
-        <div ref="chartRef" class="dashboard-donut-card__canvas"></div>
+        <div :id="chartDomId" class="dashboard-donut-card__canvas"></div>
         <div class="dashboard-donut-card__summary">
           <strong>{{ activeItem?.amount ?? centerValue }}</strong>
           <span>{{ activeItem?.label ?? centerLabel }}</span>

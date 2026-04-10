@@ -119,7 +119,11 @@ onMounted(() => {
               <p class="description">{{ t('revenue.amountTrendDesc') }}</p>
             </div>
           </div>
-          <SimpleLineChart :points="dashboard.paymentAmountTrend" :primary-legend="t('revenue.amountLegend')" />
+          <SimpleLineChart
+            dom-id="main-revenue-amount"
+            :points="dashboard.paymentAmountTrend"
+            :primary-legend="t('revenue.amountLegend')"
+          />
         </article>
 
         <article class="yc-panel dashboard-chart-panel">
@@ -130,6 +134,7 @@ onMounted(() => {
             </div>
           </div>
           <SimpleLineChart
+            dom-id="main-revenue-paying-users"
             :points="dashboard.payingUsersTrend"
             primary-color="#5ad7ff"
             :primary-legend="t('revenue.payingLegend')"

@@ -122,6 +122,7 @@ const rangeOptions = [
                   </div>
                 </div>
                 <SimpleLineChart
+                  dom-id="main-analytics-site-traffic"
                   :points="dashboard.siteTraffic"
                   :primary-legend="t('analytics.viewsLegend')"
                   :secondary-legend="t('analytics.visitorsLegend')"

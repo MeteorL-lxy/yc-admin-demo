@@ -80,7 +80,8 @@
 .dashboard-select .arco-select-view,
 .dashboard-picker.arco-picker,
 .wallet-modal__amount-input.arco-input-number {
-  min-height: 42px;
+  height: 44px;
+  min-height: 44px;
   border-radius: var(--radius-btn-small) !important;
 }
 
@@ -89,7 +90,8 @@
 .dashboard-field .arco-select-view,
 .dashboard-field .arco-picker,
 .dashboard-field .arco-input-number-mode-embed {
-  min-height: 42px;
+  height: 44px;
+  min-height: 44px;
   border-radius: var(--radius-btn-small) !important;
 }
 
@@ -113,14 +115,30 @@
 .dashboard-tabs .arco-tabs-tab {
   height: 30px;
   padding: 0 32px;
-  color: var(--text-title);
+  background: transparent;
+  color: var(--text-secondary);
   border-radius: 15px;
-  opacity: 0.7;
+  opacity: 1;
   font-size: 14px;
   font-weight: 500;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.dashboard-tabs .arco-tabs-tab-active {
+.dashboard-tabs .arco-tabs-tab .arco-tabs-tab-title {
+  color: inherit !important;
+}
+
+.dashboard-tabs .arco-tabs-tab .arco-tabs-tab-title::before {
+  display: none !important;
+  background: transparent !important;
+}
+
+.dashboard-tabs .arco-tabs-tab-active,
+.dashboard-tabs .arco-tabs-tab-active:hover {
   color: var(--text-title);
   opacity: 1;
   background: linear-gradient(180deg, #a259ff 0%, #562199 100%);
@@ -128,8 +146,10 @@
 }
 
 .dashboard-tabs .arco-tabs-tab:not(.arco-tabs-tab-active):hover {
+  color: var(--text-title);
   opacity: 1;
-  background: rgba(255, 255, 255, 0.06);
+  background: transparent !important;
+  box-shadow: none;
 }
 
 .dashboard-tabs .arco-tabs-nav-ink {
@@ -484,6 +504,13 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.dashboard-filter-actions .arco-btn,
+.dashboard-filter-actions .yc-large-button,
+.dashboard-filter-actions .yc-secondary-button--large {
+  height: 44px;
+  min-height: 44px;
 }
 
 .dashboard-update-indicator {
