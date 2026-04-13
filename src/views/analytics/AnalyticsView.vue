@@ -230,3 +230,7 @@ const rangeOptions = [
     </a-modal>
   </div>
 </template>
+
+<style lang="less">
+@import './analytics.less';
+</style>

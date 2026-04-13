@@ -5,7 +5,7 @@ import '@arco-design/web-vue/dist/arco.less';
 import App from './App.vue';
 import router from './router';
 import './styles/theme.less';
-import './styles/dashboard.less';
+import './styles/global.less';
 
 if (typeof document !== 'undefined') {
   document.body.setAttribute('arco-theme', 'dark');

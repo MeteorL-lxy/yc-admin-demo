@@ -152,3 +152,7 @@ onMounted(() => {
     </template>
   </div>
 </template>
+
+<style lang="less">
+@import './revenue.less';
+</style>

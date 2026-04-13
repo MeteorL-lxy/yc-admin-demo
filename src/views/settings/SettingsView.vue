@@ -65,3 +65,7 @@ onMounted(() => {
     </a-tabs>
   </div>
 </template>
+
+<style lang="less">
+@import './settings.less';
+</style>

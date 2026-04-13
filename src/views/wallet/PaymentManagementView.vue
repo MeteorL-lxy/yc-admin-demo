@@ -144,3 +144,7 @@ onMounted(() => {
     </a-modal>
   </div>
 </template>
+
+<style lang="less">
+@import './wallet.less';
+</style>

@@ -17,3 +17,33 @@ defineProps<{
     </div>
   </section>
 </template>
+
+<style scoped lang="less">
+.dashboard-page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.dashboard-page-heading__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-subtitle {
+  margin: 10px 0 0;
+  max-width: 780px;
+  color: var(--text-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .dashboard-page-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>

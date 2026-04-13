@@ -226,3 +226,10 @@ onBeforeUnmount(() => {
     <div ref="chartRef" class="dashboard-heatmap-chart"></div>
   </article>
 </template>
+
+<style scoped lang="less">
+.dashboard-heatmap-chart {
+  width: 100%;
+  height: 246px;
+}
+</style>

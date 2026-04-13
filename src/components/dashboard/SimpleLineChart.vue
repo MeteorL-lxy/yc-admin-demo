@@ -231,3 +231,36 @@ onBeforeUnmount(() => {
     <div :id="domId" class="dashboard-line-chart"></div>
   </div>
 </template>
+
+<style scoped lang="less">
+.dashboard-chart-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dashboard-chart-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dashboard-chart-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.dashboard-chart-legend__item i {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.dashboard-line-chart {
+  width: 100%;
+  height: 264px;
+}
+</style>

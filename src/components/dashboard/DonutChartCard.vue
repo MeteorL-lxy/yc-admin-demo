@@ -186,3 +186,93 @@ onBeforeUnmount(() => {
     </div>
   </article>
 </template>
+
+<style scoped lang="less">
+.dashboard-donut-card__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dashboard-donut-card__chart {
+  position: relative;
+  min-height: 282px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top, rgba(162, 89, 255, 0.12), transparent 54%),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dashboard-donut-card__canvas {
+  width: 100%;
+  height: 282px;
+}
+
+.dashboard-donut-card__summary {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.dashboard-donut-card__summary strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.dashboard-donut-card__summary span {
+  color: var(--text-secondary);
+}
+
+.dashboard-donut-card__legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dashboard-donut-card__legend-item {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 68px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dashboard-donut-card__legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.dashboard-donut-card__legend-item strong {
+  color: var(--text-title);
+}
+
+.dashboard-donut-card__legend-item p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .dashboard-donut-card__legend {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-donut-card__summary {
+    gap: 8px;
+  }
+}
+</style>
