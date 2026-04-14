@@ -1,11 +1,13 @@
 import { computed, ref, watch } from 'vue';
 import { Message } from '@arco-design/web-vue';
 
+import { useLocale } from '@/composables/useLocale';
 import { fetchProfile, updateProfile } from '@/services/profile.service';
 import { fetchWorks } from '@/services/work.service';
 import type { CreatorProfile, ProfileDraft, WorkFilter, WorkItem } from '@/types/profile';
 
 export function useProfilePage() {
+  const { t } = useLocale();
   const profile = ref<CreatorProfile | null>(null);
   const works = ref<WorkItem[]>([]);
   const profileLoading = ref(false);
@@ -24,7 +26,7 @@ export function useProfilePage() {
     try {
       profile.value = await fetchProfile();
     } catch (error) {
-      profileError.value = error instanceof Error ? error.message : '获取用户信息失败';
+      profileError.value = error instanceof Error ? error.message : t('profile.errors.fetchProfile');
     } finally {
       profileLoading.value = false;
     }
@@ -37,7 +39,7 @@ export function useProfilePage() {
     try {
       works.value = await fetchWorks(activeFilter.value);
     } catch (error) {
-      worksError.value = error instanceof Error ? error.message : '获取作品列表失败';
+      worksError.value = error instanceof Error ? error.message : t('profile.errors.fetchWorks');
     } finally {
       worksLoading.value = false;
     }
@@ -50,9 +52,9 @@ export function useProfilePage() {
   const saveProfile = async (draft: ProfileDraft) => {
     try {
       profile.value = await updateProfile(draft);
-      Message.success('个人资料已更新');
+      Message.success(t('profile.messages.profileUpdated'));
     } catch (error) {
-      Message.error(error instanceof Error ? error.message : '保存失败，请稍后重试');
+      Message.error(error instanceof Error ? error.message : t('profile.errors.saveProfile'));
     }
   };
 

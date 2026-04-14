@@ -32,7 +32,7 @@ onMounted(() => {
       </a-button>
     </div>
 
-    <a-tabs v-else-if="snapshot" v-model:active-key="activeTab" class="dashboard-tabs">
+    <a-tabs v-else-if="snapshot" v-model:active-key="activeTab" class="dashboard-tabs settings-tabs">
       <a-tab-pane key="basic" :title="t('settings.basic')">
         <section class="settings-language-grid">
           <article

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale';
 import type { CreatorProfile } from '@/types/profile';
 
 defineProps<{
@@ -8,12 +9,14 @@ defineProps<{
 defineEmits<{
   edit: [];
 }>();
+
+const { t } = useLocale();
 </script>
 
 <template>
   <section class="profile-hero">
     <div class="profile-hero__backdrop">
-      <img :src="profile.background" alt="背景图" class="profile-hero__image" />
+      <img :src="profile.background" :alt="t('profile.hero.backgroundAlt')" class="profile-hero__image" />
       <div class="profile-hero__overlay" />
       <div class="profile-hero__fade" />
     </div>
@@ -34,9 +37,9 @@ defineEmits<{
             </div>
 
             <div class="hero-actions">
-              <a-tag class="yc-gradient-tag">Novel</a-tag>
+              <a-tag class="yc-gradient-tag">{{ t('profile.hero.genreTag') }}</a-tag>
               <a-button type="primary" class="yc-small-button" @click="$emit('edit')">
-                编辑资料
+                {{ t('profile.hero.editProfile') }}
               </a-button>
             </div>
           </div>
@@ -44,7 +47,7 @@ defineEmits<{
           <div class="hero-info-line">
             <span>{{ profile.email }}</span>
             <span>{{ profile.phone }}</span>
-            <span>邀请码 {{ profile.inviteCode }}</span>
+            <span>{{ t('profile.hero.inviteCode') }} {{ profile.inviteCode }}</span>
           </div>
 
           <div class="hero-stats">

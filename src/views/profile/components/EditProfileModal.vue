@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { Message } from '@arco-design/web-vue';
 import { IconCamera, IconImageClose, IconRedo } from '@arco-design/web-vue/es/icon';
 
+import { useLocale } from '@/composables/useLocale';
 import type { CreatorProfile, ProfileDraft } from '@/types/profile';
 
 type DragMode = 'move' | 'nw' | 'ne' | 'sw' | 'se' | null;
@@ -20,6 +21,8 @@ const emit = defineEmits<{
   'update:visible': [value: boolean];
   save: [payload: ProfileDraft];
 }>();
+
+const { t } = useLocale();
 
 const draft = reactive<ProfileDraft>({
   nickname: props.profile.nickname,
@@ -130,7 +133,7 @@ const readFileAsDataUrl = (file: File) =>
   new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(new Error('读取文件失败'));
+    reader.onerror = () => reject(new Error(t('profile.editModal.errors.readFile')));
     reader.readAsDataURL(file);
   });
 
@@ -159,7 +162,7 @@ const loadAvatarSource = async (url: string) => {
       imageMeta.naturalHeight = image.naturalHeight;
       resolve();
     };
-    image.onerror = () => reject(new Error('头像资源加载失败'));
+    image.onerror = () => reject(new Error(t('profile.editModal.errors.avatarLoad')));
     image.src = url;
   }).catch(() => {
     stageImage.value = null;
@@ -227,14 +230,14 @@ const renderCropPreviews = () => {
 
 const resetCrop = () => {
   initializeCrop();
-  Message.info('裁剪框已重置');
+  Message.info(t('profile.editModal.messages.cropReset'));
 };
 
 const confirmCrop = () => {
   draft.avatar = previewSquare.value;
   draft.squareAvatar = previewSquare.value;
   draft.circleAvatar = previewCircle.value;
-  Message.success('头像已裁剪并暂存，保存修改后生效');
+  Message.success(t('profile.editModal.messages.cropSaved'));
 };
 
 const startDrag = (mode: DragMode, event: MouseEvent) => {
@@ -338,13 +341,13 @@ const handleAvatarChange = async (event: Event) => {
 
   if (!file) return;
   if (!file.type.startsWith('image/')) {
-    Message.error('请选择图片文件');
+    Message.error(t('profile.editModal.errors.imageOnly'));
     return;
   }
 
   sourceAvatar.value = await readFileAsDataUrl(file);
   await loadAvatarSource(sourceAvatar.value);
-  Message.success('头像已载入裁剪器，请确认裁剪后再保存');
+  Message.success(t('profile.editModal.messages.avatarLoaded'));
 };
 
 const handleBackgroundChange = async (event: Event) => {
@@ -353,16 +356,16 @@ const handleBackgroundChange = async (event: Event) => {
 
   if (!file) return;
   if (!file.type.startsWith('image/')) {
-    Message.error('请选择图片文件');
+    Message.error(t('profile.editModal.errors.imageOnly'));
     return;
   }
   if (file.size > 10 * 1024 * 1024) {
-    Message.error('背景图大小不能超过 10MB');
+    Message.error(t('profile.editModal.errors.backgroundTooLarge'));
     return;
   }
 
   draft.background = await readFileAsDataUrl(file);
-  Message.success('背景图已更新预览');
+  Message.success(t('profile.editModal.messages.backgroundUpdated'));
 };
 
 const close = () => {
@@ -371,7 +374,7 @@ const close = () => {
 
 const submit = async () => {
   if (!draft.nickname.trim()) {
-    Message.error('请输入用户昵称');
+    Message.error(t('profile.editModal.errors.nicknameRequired'));
     return;
   }
 
@@ -400,41 +403,41 @@ const submit = async () => {
     @cancel="close"
   >
     <template #title>
-      <span class="section-title">编辑个人资料</span>
+      <span class="section-title">{{ t('profile.editModal.title') }}</span>
     </template>
 
     <div class="edit-layout">
       <section class="edit-column edit-column--visual">
         <div class="edit-hero-preview">
-          <img :src="draft.background" alt="背景图预览" />
+          <img :src="draft.background" :alt="t('profile.editModal.backgroundPreviewAlt')" />
           <label class="edit-image-trigger">
             <IconCamera />
-            <span>更换背景图</span>
+            <span>{{ t('profile.editModal.changeBackground') }}</span>
             <input type="file" accept="image/*" hidden @change="handleBackgroundChange" />
           </label>
         </div>
 
         <div class="avatar-edit-card">
           <div class="avatar-edit-card__header">
-            <h3 class="card-title">头像裁剪编辑器</h3>
-            <p class="description">拖动或缩放裁剪框选择头像区域，同时生成方形和圆形头像。</p>
+            <h3 class="card-title">{{ t('profile.editModal.avatarEditorTitle') }}</h3>
+            <p class="description">{{ t('profile.editModal.avatarEditorDescription') }}</p>
           </div>
 
           <div class="avatar-edit-card__toolbar">
             <label class="yc-secondary-button avatar-upload-trigger">
               <IconCamera />
-              <span>上传头像</span>
+              <span>{{ t('profile.editModal.uploadAvatar') }}</span>
               <input type="file" accept="image/*" hidden @change="handleAvatarChange" />
             </label>
             <a-button class="yc-secondary-button" @click="resetCrop">
               <IconRedo />
-              重置裁剪
+              {{ t('profile.editModal.resetCrop') }}
             </a-button>
           </div>
 
           <div class="crop-editor">
             <div class="crop-editor__canvas" :style="{ width: `${STAGE_WIDTH}px`, height: `${STAGE_HEIGHT}px` }">
-              <img :src="sourceAvatar" alt="裁剪源图" class="crop-editor__image" />
+              <img :src="sourceAvatar" :alt="t('profile.editModal.cropSourceAlt')" class="crop-editor__image" />
               <div class="crop-editor__mask" />
 
               <div class="crop-editor__selection" :style="cropStyle" @mousedown="startDrag('move', $event)">
@@ -449,43 +452,43 @@ const submit = async () => {
 
           <div class="avatar-preview-grid">
             <div class="avatar-preview-box">
-              <span class="description">方形头像</span>
+              <span class="description">{{ t('profile.editModal.squareAvatar') }}</span>
               <div class="avatar-preview-box__frame avatar-preview-box__frame--square">
-                <img :src="previewSquare" alt="方形头像" />
+                <img :src="previewSquare" :alt="t('profile.editModal.squareAvatarAlt')" />
               </div>
             </div>
             <div class="avatar-preview-box">
-              <span class="description">圆形头像</span>
+              <span class="description">{{ t('profile.editModal.circleAvatar') }}</span>
               <div class="avatar-preview-box__frame avatar-preview-box__frame--circle">
-                <img :src="previewCircle" alt="圆形头像" />
+                <img :src="previewCircle" :alt="t('profile.editModal.circleAvatarAlt')" />
               </div>
             </div>
           </div>
 
           <a-button type="primary" class="yc-large-button avatar-confirm-button" @click="confirmCrop">
-            确认裁剪并保存头像
+            {{ t('profile.editModal.confirmCrop') }}
           </a-button>
         </div>
       </section>
 
       <section class="edit-column">
         <div class="yc-panel">
-          <h3 class="card-title">账号信息</h3>
+          <h3 class="card-title">{{ t('profile.editModal.accountInfo') }}</h3>
           <div class="account-grid">
             <div class="account-item">
-              <span class="description">邮箱</span>
+              <span class="description">{{ t('profile.editModal.email') }}</span>
               <strong>{{ profile.email }}</strong>
             </div>
             <div class="account-item">
-              <span class="description">手机</span>
+              <span class="description">{{ t('profile.editModal.phone') }}</span>
               <strong>{{ profile.phone }}</strong>
             </div>
             <div class="account-item">
-              <span class="description">邀请码</span>
+              <span class="description">{{ t('profile.editModal.inviteCode') }}</span>
               <strong>{{ profile.inviteCode }}</strong>
             </div>
             <div class="account-item">
-              <span class="description">用户 ID</span>
+              <span class="description">{{ t('profile.editModal.userId') }}</span>
               <strong>{{ profile.id }}</strong>
             </div>
           </div>
@@ -493,13 +496,13 @@ const submit = async () => {
 
         <div class="yc-panel">
           <div class="field-group">
-            <label class="description field-label">用户昵称</label>
-            <a-input v-model="draft.nickname" size="large" placeholder="请输入用户昵称" />
+            <label class="description field-label">{{ t('profile.editModal.nickname') }}</label>
+            <a-input v-model="draft.nickname" size="large" :placeholder="t('profile.editModal.nicknamePlaceholder')" />
           </div>
 
           <div class="field-group">
             <div class="field-label-row">
-              <label class="description field-label">个性签名</label>
+              <label class="description field-label">{{ t('profile.editModal.signature') }}</label>
               <span class="description" :class="{ 'text-danger': signatureCount > 100 }">
                 {{ signatureCount }}/100
               </span>
@@ -509,13 +512,13 @@ const submit = async () => {
               :max-length="100"
               :auto-size="{ minRows: 4, maxRows: 6 }"
               show-word-limit
-              placeholder="这个人很懒，还没有个性签名"
+              :placeholder="t('profile.editModal.signaturePlaceholder')"
             />
           </div>
 
           <div v-if="saving" class="save-progress">
             <div class="save-progress__row">
-              <span class="description">保存中...</span>
+              <span class="description">{{ t('profile.editModal.saving') }}</span>
               <span>{{ progress }}%</span>
             </div>
             <a-progress :percent="progress" :show-text="false" :stroke-width="8" />
@@ -524,10 +527,10 @@ const submit = async () => {
           <div class="edit-actions">
             <a-button class="yc-secondary-button" @click="close">
               <IconImageClose />
-              取消
+              {{ t('profile.editModal.cancel') }}
             </a-button>
             <a-button type="primary" class="yc-large-button" :loading="saving" @click="submit">
-              保存修改
+              {{ t('profile.editModal.save') }}
             </a-button>
           </div>
         </div>

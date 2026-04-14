@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+
+import { useLocale } from '@/composables/useLocale';
 import type { WorkItem } from '@/types/profile';
 
 const props = defineProps<{
   item: WorkItem;
 }>();
 
-const statusLabel = computed(() => (props.item.status === 'published' ? '已发布' : '草稿'));
-const categoryLabel = computed(() => (props.item.category === 'novel' ? '小说' : '短剧'));
+const { t } = useLocale();
+
+const statusLabel = computed(() => (props.item.status === 'published' ? t('profile.workCard.status.published') : t('profile.workCard.status.draft')));
+const categoryLabel = computed(() => (props.item.category === 'novel' ? t('profile.workCard.category.novel') : t('profile.workCard.category.drama')));
 </script>
 
 <template>
@@ -33,13 +37,13 @@ const categoryLabel = computed(() => (props.item.category === 'novel' ? '小说'
       <p class="body-text work-card__desc">{{ item.description }}</p>
 
       <div class="work-card__meta">
-        <span>{{ item.episodes }} {{ item.category === 'novel' ? '章' : '集' }}</span>
-        <span v-if="item.words">{{ item.words.toLocaleString() }} 字</span>
+        <span>{{ item.episodes }} {{ item.category === 'novel' ? t('profile.workCard.novelEpisodeUnit') : t('profile.workCard.dramaEpisodeUnit') }}</span>
+        <span v-if="item.words">{{ item.words.toLocaleString() }} {{ t('profile.workCard.wordUnit') }}</span>
       </div>
 
       <div class="work-card__metrics">
-        <span>{{ item.views }} 浏览</span>
-        <span>{{ item.collects }} 收藏</span>
+        <span>{{ item.views }} {{ t('profile.workCard.viewsUnit') }}</span>
+        <span>{{ item.collects }} {{ t('profile.workCard.collectsUnit') }}</span>
         <span v-if="item.score">★ {{ item.score.toFixed(1) }}</span>
       </div>
     </div>

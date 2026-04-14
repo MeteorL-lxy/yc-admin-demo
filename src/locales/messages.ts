@@ -193,6 +193,99 @@ export const messages: Record<AppLanguage, MessageTree> = {
         }
       }
     },
+    profile: {
+      loading: '正在加载创作者主页...',
+      loadError: '主页数据加载失败',
+      hero: {
+        backgroundAlt: '背景图',
+        genreTag: '小说',
+        editProfile: '编辑资料',
+        inviteCode: '邀请码'
+      },
+      works: {
+        workspace: '创作者工作台',
+        title: '我的作品',
+        upload: '上传作品',
+        loading: '正在加载作品数据...',
+        loadError: '作品加载失败',
+        emptyTitle: '还没有作品',
+        emptyDescription: '先创建一个新作品，把这个主页填满成完整的创作者门面。',
+        create: '创建作品',
+        filters: {
+          all: '全部作品',
+          published: '已发布',
+          draft: '草稿箱'
+        }
+      },
+      workCard: {
+        status: {
+          published: '已发布',
+          draft: '草稿'
+        },
+        category: {
+          novel: '小说',
+          drama: '短剧'
+        },
+        novelEpisodeUnit: '章',
+        dramaEpisodeUnit: '集',
+        wordUnit: '字',
+        viewsUnit: '浏览',
+        collectsUnit: '收藏'
+      },
+      stats: {
+        novels: '小说',
+        followers: 'Followers',
+        collects: '收藏'
+      },
+      editModal: {
+        title: '编辑个人资料',
+        backgroundPreviewAlt: '背景图预览',
+        changeBackground: '更换背景图',
+        avatarEditorTitle: '头像裁剪编辑器',
+        avatarEditorDescription: '拖动或缩放裁剪框选择头像区域，同时生成方形和圆形头像。',
+        uploadAvatar: '上传头像',
+        resetCrop: '重置裁剪',
+        cropSourceAlt: '裁剪源图',
+        squareAvatar: '方形头像',
+        squareAvatarAlt: '方形头像预览',
+        circleAvatar: '圆形头像',
+        circleAvatarAlt: '圆形头像预览',
+        confirmCrop: '确认裁剪并保存头像',
+        accountInfo: '账号信息',
+        email: '邮箱',
+        phone: '手机',
+        inviteCode: '邀请码',
+        userId: '用户 ID',
+        nickname: '用户昵称',
+        nicknamePlaceholder: '请输入用户昵称',
+        signature: '个性签名',
+        signaturePlaceholder: '这个人很懒，还没有个性签名',
+        saving: '保存中...',
+        cancel: '取消',
+        save: '保存修改',
+        errors: {
+          readFile: '读取文件失败',
+          avatarLoad: '头像资源加载失败',
+          imageOnly: '请选择图片文件',
+          backgroundTooLarge: '背景图大小不能超过 10MB',
+          nicknameRequired: '请输入用户昵称'
+        },
+        messages: {
+          cropReset: '裁剪框已重置',
+          cropSaved: '头像已裁剪并暂存，保存修改后生效',
+          avatarLoaded: '头像已载入裁剪器，请确认裁剪后再保存',
+          backgroundUpdated: '背景图已更新预览'
+        }
+      },
+      errors: {
+        fetchProfile: '获取用户信息失败',
+        fetchWorks: '获取作品列表失败',
+        saveProfile: '保存失败，请稍后重试'
+      },
+      messages: {
+        profileUpdated: '个人资料已更新'
+      }
+    },
     service: {
       analytics: {
         allWorks: '全部作品',
@@ -430,6 +523,99 @@ export const messages: Record<AppLanguage, MessageTree> = {
           title: 'Auto payout report',
           description: 'Send payout reconciliation summary to your primary email every payout cycle.'
         }
+      }
+    },
+    profile: {
+      loading: 'Loading creator profile...',
+      loadError: 'Failed to load profile data',
+      hero: {
+        backgroundAlt: 'Background image',
+        genreTag: 'Novel',
+        editProfile: 'Edit profile',
+        inviteCode: 'Invite code'
+      },
+      works: {
+        workspace: 'Creator workspace',
+        title: 'My works',
+        upload: 'Upload work',
+        loading: 'Loading works...',
+        loadError: 'Failed to load works',
+        emptyTitle: 'No works yet',
+        emptyDescription: 'Create your first work and start filling this creator profile.',
+        create: 'Create work',
+        filters: {
+          all: 'All works',
+          published: 'Published',
+          draft: 'Drafts'
+        }
+      },
+      workCard: {
+        status: {
+          published: 'Published',
+          draft: 'Draft'
+        },
+        category: {
+          novel: 'Novel',
+          drama: 'Drama'
+        },
+        novelEpisodeUnit: 'chapters',
+        dramaEpisodeUnit: 'episodes',
+        wordUnit: 'words',
+        viewsUnit: 'views',
+        collectsUnit: 'favorites'
+      },
+      stats: {
+        novels: 'Novels',
+        followers: 'Followers',
+        collects: 'Favorites'
+      },
+      editModal: {
+        title: 'Edit profile',
+        backgroundPreviewAlt: 'Background preview',
+        changeBackground: 'Change background',
+        avatarEditorTitle: 'Avatar crop editor',
+        avatarEditorDescription: 'Drag or resize the crop box to generate both square and circular avatars.',
+        uploadAvatar: 'Upload avatar',
+        resetCrop: 'Reset crop',
+        cropSourceAlt: 'Crop source image',
+        squareAvatar: 'Square avatar',
+        squareAvatarAlt: 'Square avatar preview',
+        circleAvatar: 'Circle avatar',
+        circleAvatarAlt: 'Circle avatar preview',
+        confirmCrop: 'Confirm crop and save avatar',
+        accountInfo: 'Account information',
+        email: 'Email',
+        phone: 'Phone',
+        inviteCode: 'Invite code',
+        userId: 'User ID',
+        nickname: 'Nickname',
+        nicknamePlaceholder: 'Please enter a nickname',
+        signature: 'Signature',
+        signaturePlaceholder: 'No signature yet',
+        saving: 'Saving...',
+        cancel: 'Cancel',
+        save: 'Save changes',
+        errors: {
+          readFile: 'Failed to read file',
+          avatarLoad: 'Failed to load avatar source',
+          imageOnly: 'Please select an image file',
+          backgroundTooLarge: 'Background image must be smaller than 10MB',
+          nicknameRequired: 'Please enter a nickname'
+        },
+        messages: {
+          cropReset: 'Crop box has been reset',
+          cropSaved: 'Avatar has been cropped and staged. Save changes to apply.',
+          avatarLoaded: 'Avatar loaded into crop editor. Confirm crop before saving.',
+          backgroundUpdated: 'Background preview updated'
+        }
+      },
+      errors: {
+        fetchProfile: 'Failed to fetch profile data',
+        fetchWorks: 'Failed to fetch works list',
+        saveProfile: 'Failed to save profile. Please try again later.'
+      },
+      messages: {
+        profileUpdated: 'Profile updated'
       }
     },
     service: {

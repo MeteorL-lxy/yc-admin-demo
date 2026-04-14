@@ -3,6 +3,7 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { IconRefresh } from '@arco-design/web-vue/es/icon';
 
+import { useLocale } from '@/composables/useLocale';
 import EditProfileModal from './components/EditProfileModal.vue';
 import ProfileHeroCard from './components/ProfileHeroCard.vue';
 import WorksSection from './components/WorksSection.vue';
@@ -10,6 +11,7 @@ import { useProfilePage } from './composables/useProfilePage';
 import type { WorkItem } from '@/types/profile';
 
 const router = useRouter();
+const { t } = useLocale();
 
 const {
   profile,
@@ -44,15 +46,15 @@ const openWorkDetail = (item: WorkItem) => {
   <div class="profile-view">
     <div v-if="profileLoading" class="loading-panel yc-panel">
       <a-spin :size="32" />
-      <p class="description">正在加载创作者主页...</p>
+      <p class="description">{{ t('profile.loading') }}</p>
     </div>
 
     <div v-else-if="profileError" class="error-panel yc-panel">
-      <h2 class="section-title">主页数据加载失败</h2>
+      <h2 class="section-title">{{ t('profile.loadError') }}</h2>
       <p class="body-text">{{ profileError }}</p>
       <a-button class="yc-secondary-button" @click="loadProfile">
         <IconRefresh />
-        重试
+        {{ t('common.retry') }}
       </a-button>
     </div>
 
