@@ -94,6 +94,7 @@ const rangeOptions = [
 
         <a-button type="primary" class="yc-large-button" @click="openDiagnosis">
           <IconBulb />
+          测试测试
           {{ t('analytics.startAnalysis') }}
         </a-button>
       </section>
