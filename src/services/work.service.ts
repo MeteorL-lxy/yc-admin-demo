@@ -1,14 +1,29 @@
+import { get, getOne, postOne, uploadFile } from '@/lib/supabaseQuery';
 import type { WorkFilter, WorkItem } from '@/types/profile';
-import { workListMock } from '@/mocks/profile';
 
-const delay = (ms = 320) => new Promise((resolve) => setTimeout(resolve, ms));
+/** 查询作品列表（按创建时间倒序，支持分页） */
+export async function fetchWorks(
+  filter: WorkFilter = 'all',
+  page = 1,
+  pageSize = 9
+): Promise<{ data: WorkItem[]; total: number }> {
+  const filters = filter === 'all' ? undefined : { status: filter };
+  return get<WorkItem[]>('works', filters, { page, pageSize });
+}
 
-export async function fetchWorks(filter: WorkFilter = 'all'): Promise<WorkItem[]> {
-  await delay();
+/** 上传封面图片到 Storage */
+export async function uploadCover(file: File): Promise<string> {
+  const ext = file.name.split('.').pop();
+  const filePath = `covers/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  return uploadFile('upload-cover', filePath, file);
+}
 
-  if (filter === 'all') {
-    return [...workListMock];
-  }
+/** 查询单个作品详情 */
+export async function fetchWork(id: string): Promise<WorkItem> {
+  return getOne<WorkItem>('works', id);
+}
 
-  return workListMock.filter((item) => item.status === filter);
+/** 创建作品 */
+export async function createWork(work: Omit<WorkItem, 'id'>): Promise<WorkItem> {
+  return postOne<WorkItem>('works', work);
 }

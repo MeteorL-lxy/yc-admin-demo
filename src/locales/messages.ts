@@ -286,6 +286,30 @@ export const messages: Record<AppLanguage, MessageTree> = {
         profileUpdated: '个人资料已更新'
       }
     },
+    series: {
+      loading: '正在加载作品详情...',
+      loadError: '作品详情加载失败',
+      notFound: '作品不存在',
+      backToProfile: '返回主页',
+      description: '作品简介',
+      info: '作品信息',
+      status: '状态',
+      category: '类型',
+      episodes: '集数',
+      words: '字数',
+      views: '浏览',
+      collects: '收藏',
+      score: '评分',
+      statusPublished: '已发布',
+      statusDraft: '草稿',
+      categoryNovel: '小说',
+      categoryDrama: '短剧',
+      novelEpisodeUnit: '章',
+      dramaEpisodeUnit: '集',
+      wordUnit: '字',
+      viewsUnit: '浏览',
+      collectsUnit: '收藏'
+    },
     service: {
       analytics: {
         allWorks: '全部作品',
@@ -617,6 +641,30 @@ export const messages: Record<AppLanguage, MessageTree> = {
       messages: {
         profileUpdated: 'Profile updated'
       }
+    },
+    series: {
+      loading: 'Loading work detail...',
+      loadError: 'Failed to load work detail',
+      notFound: 'Work not found',
+      backToProfile: 'Back to profile',
+      description: 'Description',
+      info: 'Work info',
+      status: 'Status',
+      category: 'Category',
+      episodes: 'Episodes',
+      words: 'Words',
+      views: 'Views',
+      collects: 'Favorites',
+      score: 'Score',
+      statusPublished: 'Published',
+      statusDraft: 'Draft',
+      categoryNovel: 'Novel',
+      categoryDrama: 'Drama',
+      novelEpisodeUnit: 'chapters',
+      dramaEpisodeUnit: 'episodes',
+      wordUnit: 'words',
+      viewsUnit: 'views',
+      collectsUnit: 'favorites'
     },
     service: {
       analytics: {

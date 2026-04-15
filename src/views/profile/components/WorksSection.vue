@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { IconPlus, IconRefresh } from '@arco-design/web-vue/es/icon';
 
+import YcPagination from '@/components/common/YcPagination.vue';
 import WorkCard from './WorkCard.vue';
 import { useLocale } from '@/composables/useLocale';
 import { PROFILE_FILTER_OPTIONS } from '@/constants/profile';
@@ -12,10 +13,14 @@ const props = defineProps<{
   loading: boolean;
   error: string;
   empty: boolean;
+  page: number;
+  total: number;
+  pageSize: number;
 }>();
 
 const emit = defineEmits<{
   'update:filter': [value: WorkFilter];
+  'update:page': [page: number];
   retry: [];
   upload: [];
   openWork: [item: WorkItem];
@@ -77,15 +82,24 @@ const { t } = useLocale();
       </a-button>
     </div>
 
-    <div v-else class="works-grid">
-      <div
-        v-for="item in props.works"
-        :key="item.id"
-        class="works-grid__item"
-        @click="emit('openWork', item)"
-      >
-        <WorkCard :item="item" />
+    <div v-else>
+      <div class="works-grid">
+        <div
+          v-for="item in props.works"
+          :key="item.id"
+          class="works-grid__item"
+          @click="emit('openWork', item)"
+        >
+          <WorkCard :item="item" />
+        </div>
       </div>
+
+      <YcPagination
+        :current="props.page"
+        :total="props.total"
+        :page-size="props.pageSize"
+        @update:current="emit('update:page', $event)"
+      />
     </div>
   </section>
 </template>

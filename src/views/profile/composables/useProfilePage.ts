@@ -10,6 +10,9 @@ export function useProfilePage() {
   const { t } = useLocale();
   const profile = ref<CreatorProfile | null>(null);
   const works = ref<WorkItem[]>([]);
+  const worksTotal = ref(0);
+  const worksPage = ref(1);
+  const worksPageSize = 6;
   const profileLoading = ref(false);
   const worksLoading = ref(false);
   const profileError = ref('');
@@ -37,7 +40,9 @@ export function useProfilePage() {
     worksError.value = '';
 
     try {
-      works.value = await fetchWorks(activeFilter.value);
+      const res = await fetchWorks(activeFilter.value, worksPage.value, worksPageSize);
+      works.value = res.data;
+      worksTotal.value = res.total;
     } catch (error) {
       worksError.value = error instanceof Error ? error.message : t('profile.errors.fetchWorks');
     } finally {
@@ -59,12 +64,16 @@ export function useProfilePage() {
   };
 
   watch(activeFilter, () => {
+    worksPage.value = 1;
     void loadWorks();
   });
 
   return {
     profile,
     works,
+    worksTotal,
+    worksPage,
+    worksPageSize,
     profileLoading,
     worksLoading,
     profileError,

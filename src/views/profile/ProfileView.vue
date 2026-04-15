@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IconRefresh } from '@arco-design/web-vue/es/icon';
 
 import { useLocale } from '@/composables/useLocale';
 import EditProfileModal from './components/EditProfileModal.vue';
 import ProfileHeroCard from './components/ProfileHeroCard.vue';
+import UploadFormModal from './components/UploadFormModal.vue';
 import WorksSection from './components/WorksSection.vue';
 import { useProfilePage } from './composables/useProfilePage';
 import type { WorkItem } from '@/types/profile';
@@ -16,6 +17,9 @@ const { t } = useLocale();
 const {
   profile,
   works,
+  worksTotal,
+  worksPage,
+  worksPageSize,
   profileLoading,
   worksLoading,
   profileError,
@@ -29,13 +33,11 @@ const {
   saveProfile
 } = useProfilePage();
 
+const uploadVisible = ref(false);
+
 onMounted(() => {
   void initialize();
 });
-
-const goToUpload = () => {
-  void router.push('/upload');
-};
 
 const openWorkDetail = (item: WorkItem) => {
   void router.push(`/series/${item.id}`);
@@ -67,9 +69,13 @@ const openWorkDetail = (item: WorkItem) => {
         :loading="worksLoading"
         :error="worksError"
         :empty="emptyWorks"
+        :page="worksPage"
+        :total="worksTotal"
+        :page-size="worksPageSize"
         @update:filter="activeFilter = $event"
+        @update:page="worksPage = $event; loadWorks()"
         @retry="loadWorks"
-        @upload="goToUpload"
+        @upload="uploadVisible = true"
         @open-work="openWorkDetail"
       />
 
@@ -77,6 +83,11 @@ const openWorkDetail = (item: WorkItem) => {
         v-model:visible="editVisible"
         :profile="profile"
         @save="saveProfile"
+      />
+
+      <UploadFormModal
+        v-model:visible="uploadVisible"
+        @created="loadWorks"
       />
     </template>
   </div>

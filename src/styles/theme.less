@@ -40,8 +40,16 @@ body,
 
 body {
   background:
-    radial-gradient(circle at top left, rgba(162, 89, 255, 0.16), transparent 24%),
-    radial-gradient(circle at top right, rgba(86, 33, 153, 0.18), transparent 28%),
+    radial-gradient(
+      circle at top left,
+      rgba(162, 89, 255, 0.16),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(86, 33, 153, 0.18),
+      transparent 28%
+    ),
     var(--bg-page);
   overflow-x: hidden;
 }
@@ -196,7 +204,11 @@ textarea {
   }
 
   &--active {
-    background: linear-gradient(103deg, rgba(162, 89, 255, 0.28), rgba(86, 33, 153, 0.38));
+    background: linear-gradient(
+      103deg,
+      rgba(162, 89, 255, 0.28),
+      rgba(86, 33, 153, 0.38)
+    );
     color: var(--text-title);
     box-shadow: inset 0 0 0 1px rgba(196, 158, 255, 0.42);
   }
@@ -437,11 +449,15 @@ textarea {
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--bg-card);
-  transition: transform 0.26s ease, box-shadow 0.26s ease;
+  transition:
+    transform 0.26s ease,
+    box-shadow 0.26s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 28px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(162, 89, 255, 0.14);
+    box-shadow:
+      0 20px 28px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(162, 89, 255, 0.14);
 
     .work-card__cover img {
       transform: scale(1.04);
@@ -515,8 +531,8 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 26px;
-  padding: 0 10px;
+  height: 24px;
+  padding: 0 6px;
   border-radius: 4px;
   font-size: var(--font-tag);
 }
@@ -712,7 +728,11 @@ textarea {
 .avatar-edit-card {
   padding: 22px;
   border-radius: 24px;
-  background: linear-gradient(180deg, rgba(39, 39, 39, 0.96), rgba(24, 24, 24, 0.96));
+  background: linear-gradient(
+    180deg,
+    rgba(39, 39, 39, 0.96),
+    rgba(24, 24, 24, 0.96)
+  );
   border: 1px solid rgba(255, 255, 255, 0.06);
 
   &__header p {
@@ -762,7 +782,11 @@ textarea {
   &__mask {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42));
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.18),
+      rgba(0, 0, 0, 0.42)
+    );
     pointer-events: none;
   }
 
@@ -778,10 +802,14 @@ textarea {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) 33.3% 0 / 1px 100% no-repeat,
-      linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) 66.6% 0 / 1px 100% no-repeat,
-      linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) 0 33.3% / 100% 1px no-repeat,
-      linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) 0 66.6% / 100% 1px no-repeat;
+      linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) 33.3%
+        0 / 1px 100% no-repeat,
+      linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) 66.6%
+        0 / 1px 100% no-repeat,
+      linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2))
+        0 33.3% / 100% 1px no-repeat,
+      linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2))
+        0 66.6% / 100% 1px no-repeat;
   }
 
   &__handle {
@@ -1084,7 +1112,11 @@ textarea {
 .arco-picker-cell-range-end .arco-picker-date-value,
 .arco-timepicker-cell-selected {
   color: #fff !important;
-  background: linear-gradient(103deg, rgba(162, 89, 255, 0.85), rgba(86, 33, 153, 0.92)) !important;
+  background: linear-gradient(
+    103deg,
+    rgba(162, 89, 255, 0.85),
+    rgba(86, 33, 153, 0.92)
+  ) !important;
 }
 
 .arco-select-option-selected {
@@ -1123,7 +1155,10 @@ textarea {
   background: var(--primary-color) !important;
 }
 
-.arco-picker-cell-today:not(.arco-picker-cell-selected):not(.arco-picker-cell-range-start):not(.arco-picker-cell-range-end) .arco-picker-date-value {
+.arco-picker-cell-today:not(.arco-picker-cell-selected):not(
+    .arco-picker-cell-range-start
+  ):not(.arco-picker-cell-range-end)
+  .arco-picker-date-value {
   color: var(--primary-color) !important;
 }
 
@@ -1226,7 +1261,11 @@ textarea {
 }
 
 .arco-pagination-item-active {
-  background: linear-gradient(103deg, rgba(162, 89, 255, 0.28), rgba(86, 33, 153, 0.42)) !important;
+  background: linear-gradient(
+    103deg,
+    rgba(162, 89, 255, 0.28),
+    rgba(86, 33, 153, 0.42)
+  ) !important;
   border-color: rgba(196, 158, 255, 0.28) !important;
   color: #fff !important;
 }
@@ -1322,6 +1361,268 @@ textarea {
   }
 }
 
+/* Upload page */
+.upload-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 680px;
+}
+
+.upload-card {
+  padding: 32px;
+}
+
+.upload-header {
+  margin-bottom: 28px;
+
+  .section-title {
+    margin-bottom: 8px;
+  }
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.upload-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-title);
+}
+
+.upload-category-group {
+  display: flex;
+  gap: 14px;
+}
+
+.upload-category-item {
+  flex: 1;
+  padding: 16px 20px;
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.24s ease;
+
+  &__label {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-title);
+    margin-bottom: 4px;
+  }
+
+  &__desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(196, 158, 255, 0.2);
+  }
+
+  &--active {
+    background: rgba(162, 89, 255, 0.1);
+    border-color: rgba(196, 158, 255, 0.48);
+    box-shadow: 0 0 0 3px rgba(162, 89, 255, 0.08);
+
+    .upload-category-item__label {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.upload-cover-trigger {
+  width: 100%;
+  padding: 36px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 2px dashed rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  transition: all 0.24s ease;
+  color: var(--text-body);
+  font-size: 14px;
+
+  &__icon {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+  }
+
+  .description {
+    margin-top: 4px;
+  }
+
+  &:hover {
+    border-color: rgba(196, 158, 255, 0.36);
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.upload-cover-preview {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  max-height: 280px;
+
+  img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__actions {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+.upload-submit-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Upload modal */
+.upload-modal-body {
+  .description {
+    margin-bottom: 20px;
+  }
+}
+
+.upload-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* Pagination */
+.yc-pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Series detail */
+.series-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__back {
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+
+.series-hero {
+  position: relative;
+
+  &__backdrop {
+    position: relative;
+    height: 360px;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: linear-gradient(135deg, #2d113f, #141414 68%);
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.54)),
+      linear-gradient(90deg, rgba(8, 8, 8, 0.54), transparent 42%);
+  }
+
+  &__fade {
+    position: absolute;
+    inset: auto 0 0;
+    height: 120px;
+    background: linear-gradient(180deg, transparent, var(--bg-page));
+  }
+
+  &__content {
+    position: relative;
+    margin-top: -72px;
+    padding: 0 24px 28px;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+
+    .yc-gradient-tag {
+      margin-top: 0;
+    }
+  }
+
+  &__title {
+    margin: 0;
+  }
+}
+
+.series-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: none;
+  padding: 22px 24px;
+
+  &__item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 0 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+    strong {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  &__label {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+}
+
+.series-body {
+  padding: 24px;
+
+  &__desc {
+    margin-top: 14px;
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+}
+
 /* Keep legacy flat selectors removed below after nested rewrite */
 
 @media (max-width: 1200px) {
@@ -1392,5 +1693,25 @@ textarea {
 
   .tab-button {
     flex: 1;
+  }
+
+  .series-hero__backdrop {
+    height: 260px;
+    border-radius: 22px;
+  }
+
+  .series-hero__content {
+    margin-top: -56px;
+    padding: 0 18px 22px;
+  }
+
+  .series-stats {
+    flex-direction: column;
+    gap: 12px;
+
+    &__item {
+      border-right: 0;
+      padding: 0;
+    }
   }
 }

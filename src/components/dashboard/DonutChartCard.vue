@@ -174,14 +174,10 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="dashboard-donut-card__legend">
-        <div v-for="item in items" :key="item.label" class="dashboard-donut-card__legend-item">
+        <span v-for="item in items" :key="item.label" class="dashboard-donut-card__legend-item">
           <span class="dashboard-donut-card__legend-dot" :style="{ background: item.color }"></span>
-          <div>
-            <strong>{{ item.label }}</strong>
-            <p>{{ item.amount }}</p>
-          </div>
-          <span>{{ item.value }}</span>
-        </div>
+          {{ item.label }}
+        </span>
       </div>
     </div>
   </article>
@@ -232,47 +228,30 @@ onBeforeUnmount(() => {
 }
 
 .dashboard-donut-card__legend {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 4px 0;
 }
 
 .dashboard-donut-card__legend-item {
-  display: grid;
-  grid-template-columns: 10px minmax(0, 1fr) auto;
-  gap: 12px;
+  display: inline-flex;
   align-items: center;
-  min-height: 68px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 6px;
+  color: var(--text-body);
+  font-size: 13px;
 }
 
 .dashboard-donut-card__legend-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
-}
-
-.dashboard-donut-card__legend-item strong {
-  color: var(--text-title);
-}
-
-.dashboard-donut-card__legend-item p {
-  margin: 4px 0 0;
-  color: var(--text-secondary);
-  font-size: 12px;
-  line-height: 1.5;
+  flex-shrink: 0;
 }
 
 @media (max-width: 960px) {
   .dashboard-donut-card__legend {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-donut-card__summary {
-    gap: 8px;
+    gap: 12px;
   }
 }
 </style>

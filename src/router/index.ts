@@ -7,7 +7,6 @@ import RevenueDetailView from '@/views/revenue/RevenueDetailView.vue';
 import RevenueView from '@/views/revenue/RevenueView.vue';
 import SeriesDetailView from '@/views/series/SeriesDetailView.vue';
 import SettingsView from '@/views/settings/SettingsView.vue';
-import UploadView from '@/views/upload/UploadView.vue';
 import PaymentManagementView from '@/views/wallet/PaymentManagementView.vue';
 import WalletView from '@/views/wallet/WalletView.vue';
 
@@ -56,11 +55,6 @@ const router = createRouter({
           path: 'settings',
           name: 'settings',
           component: SettingsView
-        },
-        {
-          path: 'upload',
-          name: 'upload',
-          component: UploadView
         },
         {
           path: 'series/:id',

@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { IconBulb, IconRefresh } from '@arco-design/web-vue/es/icon';
+import { onMounted } from "vue";
+import { IconBulb, IconRefresh } from "@arco-design/web-vue/es/icon";
 
-import { useLocale } from '@/composables/useLocale';
-import DonutChartCard from '@/components/dashboard/DonutChartCard.vue';
-import HeatmapCard from '@/components/dashboard/HeatmapCard.vue';
-import MetricCard from '@/components/dashboard/MetricCard.vue';
-import PageHeading from '@/components/dashboard/PageHeading.vue';
-import SimpleLineChart from '@/components/dashboard/SimpleLineChart.vue';
-import { useAnalyticsPage } from './composables/useAnalyticsPage';
+import { useLocale } from "@/composables/useLocale";
+import DonutChartCard from "@/components/dashboard/DonutChartCard.vue";
+import HeatmapCard from "@/components/dashboard/HeatmapCard.vue";
+import MetricCard from "@/components/dashboard/MetricCard.vue";
+import PageHeading from "@/components/dashboard/PageHeading.vue";
+import SimpleLineChart from "@/components/dashboard/SimpleLineChart.vue";
+import { getOverviewAnalytics } from "@/services/analytics.service";
+import { useAnalyticsPage } from "./composables/useAnalyticsPage";
 
 const { t } = useLocale();
 const {
@@ -22,23 +23,33 @@ const {
   diagnosisLoading,
   diagnosisResult,
   loadDashboard,
-  openDiagnosis
+  openDiagnosis,
 } = useAnalyticsPage();
 
-onMounted(() => {
+onMounted(async () => {
   void loadDashboard();
+
+  try {
+    const res = await getOverviewAnalytics("7d", "all");
+    console.log("analytics res = ", res);
+  } catch (error) {
+    console.error("analytics error = ", error);
+  }
 });
 
 const rangeOptions = [
-  { key: 'analytics.range7d', value: '7d' },
-  { key: 'analytics.range28d', value: '28d' },
-  { key: 'analytics.range90d', value: '90d' }
+  { key: "analytics.range7d", value: "7d" },
+  { key: "analytics.range28d", value: "28d" },
+  { key: "analytics.range90d", value: "90d" },
 ] as const;
 </script>
 
 <template>
   <div class="dashboard-view">
-    <PageHeading :title="t('analytics.title')" :subtitle="t('analytics.subtitle')">
+    <PageHeading
+      :title="t('analytics.title')"
+      :subtitle="t('analytics.subtitle')"
+    >
       <template #actions>
         <div class="dashboard-toolbar">
           <div class="dashboard-range-group">
@@ -47,14 +58,20 @@ const rangeOptions = [
               :key="option.value"
               type="button"
               class="dashboard-range-button"
-              :class="{ 'dashboard-range-button--active': activeRange === option.value }"
+              :class="{
+                'dashboard-range-button--active': activeRange === option.value,
+              }"
               @click="activeRange = option.value"
             >
               {{ t(option.key) }}
             </button>
           </div>
 
-          <a-select v-model="activeWork" class="dashboard-select" :placeholder="t('analytics.selectWork')">
+          <a-select
+            v-model="activeWork"
+            class="dashboard-select"
+            :placeholder="t('analytics.selectWork')"
+          >
             <a-option
               v-for="option in dashboard?.workOptions ?? []"
               :key="option.value"
@@ -69,32 +86,39 @@ const rangeOptions = [
 
     <div v-if="loading" class="loading-panel yc-panel">
       <a-spin :size="32" />
-      <p class="description">{{ t('analytics.loading') }}</p>
+      <p class="description">{{ t("analytics.loading") }}</p>
     </div>
 
     <div v-else-if="error" class="error-panel yc-panel">
-      <h2 class="section-title">{{ t('analytics.loadError') }}</h2>
+      <h2 class="section-title">{{ t("analytics.loadError") }}</h2>
       <p class="body-text">{{ error }}</p>
       <a-button class="yc-secondary-button" @click="loadDashboard">
         <IconRefresh />
-        {{ t('common.retry') }}
+        {{ t("common.retry") }}
       </a-button>
     </div>
 
     <template v-else-if="dashboard">
       <section class="analytics-hero-card">
         <div>
-          <p class="analytics-hero-card__eyebrow">{{ t('analytics.aiEyebrow') }}</p>
+          <p class="analytics-hero-card__eyebrow">
+            {{ t("analytics.aiEyebrow") }}
+          </p>
           <h2>{{ dashboard.insight.title }}</h2>
           <p>{{ dashboard.insight.summary }}</p>
           <div class="analytics-hero-card__tags">
-            <a-tag v-for="tag in dashboard.insight.tags" :key="tag" class="yc-tag">{{ tag }}</a-tag>
+            <a-tag
+              v-for="tag in dashboard.insight.tags"
+              :key="tag"
+              class="yc-tag"
+              >{{ tag }}</a-tag
+            >
           </div>
         </div>
 
         <a-button type="primary" class="yc-large-button" @click="openDiagnosis">
           <IconBulb />
-          {{ t('analytics.startAnalysis') }}
+          {{ t("analytics.startAnalysis") }}
         </a-button>
       </section>
 
@@ -117,8 +141,10 @@ const rangeOptions = [
               <article class="yc-panel dashboard-chart-panel">
                 <div class="dashboard-card-header">
                   <div>
-                    <h3 class="card-title">{{ t('analytics.siteTraffic') }}</h3>
-                    <p class="description">{{ t('analytics.siteTrafficDesc') }}</p>
+                    <h3 class="card-title">{{ t("analytics.siteTraffic") }}</h3>
+                    <p class="description">
+                      {{ t("analytics.siteTrafficDesc") }}
+                    </p>
                   </div>
                 </div>
                 <SimpleLineChart
@@ -162,15 +188,26 @@ const rangeOptions = [
               <article class="yc-panel">
                 <div class="dashboard-card-header">
                   <div>
-                    <h3 class="card-title">{{ t('analytics.recentActivity') }}</h3>
-                    <p class="description">{{ t('analytics.recentActivityDesc') }}</p>
+                    <h3 class="card-title">
+                      {{ t("analytics.recentActivity") }}
+                    </h3>
+                    <p class="description">
+                      {{ t("analytics.recentActivityDesc") }}
+                    </p>
                   </div>
                 </div>
 
-                <a-empty v-if="dashboard.recentActivity.length === 0" :description="t('analytics.recentActivityEmpty')" />
+                <a-empty
+                  v-if="dashboard.recentActivity.length === 0"
+                  :description="t('analytics.recentActivityEmpty')"
+                />
 
                 <div v-else class="dashboard-activity-list">
-                  <article v-for="item in dashboard.recentActivity" :key="item.id" class="dashboard-activity-item">
+                  <article
+                    v-for="item in dashboard.recentActivity"
+                    :key="item.id"
+                    class="dashboard-activity-item"
+                  >
                     <div>
                       <strong>{{ item.reader }}</strong>
                       <p>{{ item.workName }} · {{ item.chapter }}</p>
@@ -186,13 +223,21 @@ const rangeOptions = [
               <article class="yc-panel dashboard-insight-panel">
                 <div class="dashboard-card-header">
                   <div>
-                    <h3 class="card-title">{{ t('analytics.metricsAndSuggestions') }}</h3>
-                    <p class="description">{{ t('analytics.metricsAndSuggestionsDesc') }}</p>
+                    <h3 class="card-title">
+                      {{ t("analytics.metricsAndSuggestions") }}
+                    </h3>
+                    <p class="description">
+                      {{ t("analytics.metricsAndSuggestionsDesc") }}
+                    </p>
                   </div>
                 </div>
 
                 <div class="dashboard-kpi-list">
-                  <div v-for="item in dashboard.audienceMetrics" :key="item.label" class="dashboard-kpi-item">
+                  <div
+                    v-for="item in dashboard.audienceMetrics"
+                    :key="item.label"
+                    class="dashboard-kpi-item"
+                  >
                     <span>{{ item.label }}</span>
                     <strong>{{ item.value }}</strong>
                     <p>{{ item.note }}</p>
@@ -200,7 +245,12 @@ const rangeOptions = [
                 </div>
 
                 <ul class="dashboard-suggestion-list">
-                  <li v-for="suggestion in dashboard.suggestions" :key="suggestion">{{ suggestion }}</li>
+                  <li
+                    v-for="suggestion in dashboard.suggestions"
+                    :key="suggestion"
+                  >
+                    {{ suggestion }}
+                  </li>
                 </ul>
               </article>
             </section>
@@ -219,10 +269,10 @@ const rangeOptions = [
     >
       <div v-if="diagnosisLoading" class="dashboard-modal__loading">
         <a-spin />
-        <p class="description">{{ t('common.loading') }}</p>
+        <p class="description">{{ t("common.loading") }}</p>
       </div>
       <div v-else class="dashboard-modal__body">
-        <p class="body-text">{{ t('analytics.aiModalDesc') }}</p>
+        <p class="body-text">{{ t("analytics.aiModalDesc") }}</p>
         <ul class="dashboard-suggestion-list">
           <li v-for="entry in diagnosisResult" :key="entry">{{ entry }}</li>
         </ul>
@@ -232,5 +282,5 @@ const rangeOptions = [
 </template>
 
 <style lang="less">
-@import './analytics.less';
+@import "./analytics.less";
 </style>
